@@ -1,0 +1,943 @@
+<template name="editPackageTemplate">
+  {{>loggedInNavBar}}
+
+  <div class="container" style="position:relative">
+    {{>yield}}
+  </div>
+</template>
+<template name="atFormLayout">
+  <img src="/img/back.jpg" class="full-bg full-bg-bottom animation-pulseSlow">
+  <div id="login-container">
+    <h1 class="h2 text-light text-center push-top-bottom animation-slideDown">
+      <img src="/img/badge.png" style="max-width:100%; max-height:160px;">
+    </h1>
+    <div class="block animation-fadeInQuickIn">
+      {{>yield}}
+    </div>
+  </div>
+</template>
+
+
+
+<!-- NEWLY ADDED FILES -->
+<template name="budget">
+  <div class="container-fluid">
+    {{>charts}} {{>budgettable}}
+
+  </div>
+  {{>footer}}
+</template>
+
+<template name="charts">
+  <!-- <svg id="test1" class="mypiechart"></svg> -->
+  <div class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="padding-top:20px">
+    <div class="portlet box red">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-bar-chart"></i>
+          <span class="caption-subject bold uppercase">Data Visualisation</span>
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="row">
+          <div class="col-md-5 col-md-offset-1 with-3d-shadow with-transitions">
+            <div class="row" style="text-align:center;font-size:30px;padding-right:30px;font-weight:bold;padding-bottom:30px">
+              Item Breakdown
+            </div>
+            <svg id="test1" class="mypiechart"></svg>
+
+          </div>
+          <div class="col-md-5 col-md-offset-1">
+            <div class="row" style="text-align:center;font-size:30px;padding-right:30px;font-weight:bold;padding-bottom:30px">
+              Overall Spending
+            </div>
+            {{#if zerobudget}}
+            <div class="row" style="text-align:center;font-size:20px;padding-right:30px;font-weight:bold;padding-bottom:30px">
+              Please input budget!
+            </div>
+            {{else}} {{#if overbudget}}
+            <svg id="test2"></svg>
+            <div style="font-size:40px;font-weight:bold;padding-left:33%;margin-top:-35px">{{percentage}}%</div>
+            <div style="padding-left:37%"> of total budget</div>
+            <div style="font-size:20px;font-weight:bold;padding-left:28%;color:#aa3840"> You are over budget!</div>
+            {{else}}
+
+            <svg id="test2"></svg>
+            <div style="font-size:40px;font-weight:bold;padding-left:33%;margin-top:-25px">{{percentage}}%</div>
+            <div style="padding-left:37%"> of total budget</div>
+            {{/if}} {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</template>
+
+<template name="budgettable">
+  <div class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12" style="padding-top:20px">
+    <table class="table table-striped table-condensed table-bordered">
+      <thead>
+        <tr style="text-align:center">
+          <td style="width:70%;border-bottom:0px">ITEM</td>
+          <td style="width:10%;border-bottom:0px">UNIT PRICE</td>
+          <td style="width:5%;border-bottom:0px">QUANTITY</td>
+          <td style="width:15%;border-bottom:0px">PRICE</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          {{#if selectedPackage}}
+          <td>
+            <div style="font-size:30px;font-weight:bold;padding-left:10px">Hospital Package</div>
+            <div style="padding-left:20px">
+              <b>Hospital:</b> {{selectedHospital}}
+              <br> <b>Ward Type:</b> {{selectedWard}}
+              <br>
+              <b>Delivery Type:</b> {{selectedType}}
+            </div>
+          </td>
+          <td style="vertical-align:middle;text-align:center">
+            <div>{{selectedPrice}}</div>
+          </td>
+          <td style="vertical-align:middle;text-align:center">
+            <div>{{selectedQuantity}}</div>
+          </td>
+          <td style="vertical-align:middle;text-align:center">
+            <div style="text-align:center;vertical-align: middle;line-height: 100%;">
+              {{selectedPrice}} &nbsp;&nbsp;&nbsp;
+              <input type="image" style="vertical-align: middle;float:right" class="delete" img src="/img/trash.png">
+            </div>
+          </td>
+          {{/if}}
+        </tr>
+        {{#each categories}}
+        <tr>
+          <td>
+            <div style="font-size:30px;font-weight:bold;padding-left:10px">{{this}}</div>
+            {{#each hamperDetails this}}
+            <div style="padding-left:20px">
+              <div style="font-weight:900">{{this.name}}</div> {{this.productName}} <a href="{{this.productUrl}}" target="_blank"><sup><i class="fa fa-external-link" style="font-size:8px"></i></sup></a>
+            </div>
+            {{/each}}
+          </td>
+          <td>
+            <div style="font-size:30px;font-weight:bold;padding-left:10px;visibility: hidden">1</div>
+            {{#each hamperDetails this}}
+            <div style="visibility: hidden">1</div>
+            <div style="text-align:center">
+              ${{this.price}}
+            </div>
+            {{/each}}
+          </td>
+          <td>
+            <div style="font-size:30px;font-weight:bold;padding-left:10px;visibility: hidden">1</div>
+            {{#each hamperDetails this}}
+            <div style="visibility: hidden">1</div>
+            <div style="text-align:center">
+              {{this.quantity}}
+            </div>
+
+            {{/each}}
+          </td>
+          <td>
+            <div style="font-size:30px;font-weight:bold;padding-left:10px;visibility: hidden">1</div>
+
+            {{#each hamperDetails this}}
+            <div style="visibility: hidden">1</div>
+            <div style="text-align:center">${{price this.quantity this.price}}&nbsp;&nbsp;&nbsp;
+              <div style="float:right;">
+                <input type="image" class="deleteThing" img src="/img/trash.png">
+              </div>
+            </div>
+            {{/each}}
+          </td>
+        </tr>
+        {{/each}}
+        <tr>
+          <td colspan="0">
+            <div class="addpackagediv" style="padding-left:10px"> <i class="fa fa-hospital-o"></i> Change Package </div>
+            <div class="additemdiv" style="padding-left:10px"> <i class="fa fa-plus"></i> Add Item </div>
+            <div class="editbudgetdiv" style="padding-left:10px"> <i class="fa fa-dollar"></i> Edit Budget </div>
+            <!-- <div class="export" style="padding-left:10px"><i class="fa fa-download"></i> Download PDF</div> -->
+            <div class="deleteAll" style="padding-left:10px">
+              <input type="image" img src="/img/trash.png"> Delete All</div>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td colspan="2" style="text-align:right">Total:</td>
+          <td style="text-align:center">{{totalQ}}</td>
+          <td style="text-align:center">$ {{totalPrice}}</td>
+        </tr>
+        {{#if userbudget}}
+        <tr>
+          <td colspan="3" style="text-align:right">Budget:</td>
+          <td style="text-align:center">$ {{userbudget}}</td>
+        </tr>
+        <tr>
+          <td style="text-align:right" colspan="3">Balance:</td>
+          <td style="text-align:center" class={{color}}>$ {{balance}}</td>
+        </tr>
+        {{/if}}
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<template name="budgetpdf">
+  <table class="table table-striped table-condensed table-bordered">
+    <thead>
+      <tr style="text-align:center">
+        <td style="width:70%;border-bottom:0px">ITEM</td>
+        <td style="width:10%;border-bottom:0px">UNIT PRICE</td>
+        <td style="width:5%;border-bottom:0px">QUANTITY</td>
+        <td style="width:15%;border-bottom:0px">PRICE</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {{#if selectedPackage}}
+        <td>
+          <div style="font-size:30px;font-weight:bold;padding-left:10px">Hospital Package</div>
+          <div style="padding-left:20px">
+            <b>Hospital:</b> {{selectedHospital}}
+            <br> <b>Ward Type:</b> {{selectedWard}}
+            <br>
+            <b>Delivery Type:</b> {{selectedType}}
+          </div>
+        </td>
+        <td style="vertical-align:middle;text-align:center">
+          <div>{{selectedPrice}}</div>
+        </td>
+        <td style="vertical-align:middle;text-align:center">
+          <div>{{selectedQuantity}}</div>
+        </td>
+        <td style="vertical-align:middle;text-align:center">
+          <div style="text-align:center;vertical-align: middle;line-height: 100%;">
+            {{selectedPrice}} &nbsp;&nbsp;&nbsp;
+          </div>
+        </td>
+        {{/if}}
+      </tr>
+      {{#each categories}}
+      <tr>
+        <td>
+          <div style="font-size:30px;font-weight:bold;padding-left:10px">{{this}}</div>
+          {{#each hamperDetails this}}
+          <div style="padding-left:20px">
+            <div style="font-weight:900">{{this.name}}</div> {{this.productName}} <a href="{{this.productUrl}}" target="_blank"><sup><i class="fa fa-external-link" style="font-size:8px"></i></sup></a>
+          </div>
+          {{/each}}
+        </td>
+        <td>
+          <div style="font-size:30px;font-weight:bold;padding-left:10px;visibility: hidden">1</div>
+          {{#each hamperDetails this}}
+          <div style="visibility: hidden">1</div>
+          <div style="text-align:center">
+            ${{this.price}}
+          </div>
+          {{/each}}
+        </td>
+        <td>
+          <div style="font-size:30px;font-weight:bold;padding-left:10px;visibility: hidden">1</div>
+          {{#each hamperDetails this}}
+          <div style="visibility: hidden">1</div>
+          <div style="text-align:center">
+            {{this.quantity}}
+          </div>
+
+          {{/each}}
+        </td>
+        <td>
+          <div style="font-size:30px;font-weight:bold;padding-left:10px;visibility: hidden">1</div>
+
+          {{#each hamperDetails this}}
+          <div style="visibility: hidden">1</div>
+          <div style="text-align:center">${{price this.quantity this.price}}&nbsp;&nbsp;&nbsp;
+          </div>
+          {{/each}}
+        </td>
+      </tr>
+      {{/each}}
+
+      <tr>
+        <td colspan="2" style="text-align:right">Total:</td>
+        <td style="text-align:center">{{totalQ}}</td>
+        <td style="text-align:center">$ {{totalPrice}}</td>
+      </tr>
+      {{#if userbudget}}
+      <tr>
+        <td colspan="3" style="text-align:right">Budget:</td>
+        <td style="text-align:center">$ {{userbudget}}</td>
+      </tr>
+      <tr>
+        <td style="text-align:right" colspan="3">Balance:</td>
+        <td style="text-align:center" class={{color}}>$ {{balance}}</td>
+      </tr>
+      {{/if}}
+    </tbody>
+  </table>
+</template>
+
+<template name="addpackage">
+  <div class="row" style="padding-bottom:15px">
+    <div style="font-size:22pt;color:#656565;width:100%">1. SELECT HOSPITAL PACKAGE</div>
+    <span style="font-size:14pt">Click a cell to select hospital package</span>
+    <div style="width:100%">
+      <span style="font-size:13pt">How will you delivery your child?</span>
+      <form style="display:inline;margin-left:5px" id="hospitalPackage">
+        <input type="radio" id="normalType" name="type" value="normal" checked>
+        <span style="font-weight:bold;padding-right:5px">&nbsp;&nbsp;Normal</span>
+        <input type="radio" id="cesareanType" name="type" value="cesarean">
+        <span style="font-weight:bold">&nbsp;&nbsp;Cesarean</span>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div style="font-weight:bold;font-size:20pt;padding-bottom:5px">Public Hospitals</div>
+    <table class="table table-striped pricing-table-public table-condensed">
+      <thead>
+        <tr style="background-color:#9a68eb;border-radius:5px;text:align:center;color:white">
+          <td style="width:25%">Hospital</td>
+          <td style="width:15%">Ward A</td>
+          <td style="width:15%">Ward B1</td>
+          <td style="width:15%">Ward B2+</td>
+          <td style="width:15%">Ward B2</td>
+          <td style="width:15%">Ward C</td>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each wardList}}
+        <tr style="text:align:center">
+          <td style="width:25%" class>{{this.hospital}}</td>
+          {{#if this.priceWardA}}
+          <td style="width:15%" class="selectable">${{this.priceWardA}}</td>
+          {{else}}
+          <td style="width:15%">N/A</td>
+          {{/if}} {{#if this.priceWardB1}}
+          <td style="width:15%" class="selectable">${{this.priceWardB1}}</td>
+          {{else}}
+          <td style="width:15%">N/A</td>
+          {{/if}} {{#if this.priceWardB2plus}}
+          <td style="width:15%" class="selectable">${{this.priceWardB2plus}}</td>
+          {{else}}
+          <td style="width:15%">N/A</td>
+          {{/if}} {{#if this.priceWardB2}}
+          <td style="width:15%" class="selectable">${{this.priceWardB2}}</td>
+          {{else}}
+          <td style="width:15%">N/A</td>
+          {{/if}} {{#if this.priceWardC}}
+          <td style="width:15%" class="selectable">${{this.priceWardC}}</td>
+          {{else}}
+          <td style="width:15%">N/A</td>
+          {{/if}}
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <div style="font-weight:bold;font-size:20pt;padding-bottom:5px">Private Hospitals</div>
+    <table class="table table-striped pricing-table-private table-condensed">
+      <thead>
+        <tr style="background-color:#6fc191;border-radius:5px;text:align:center;color:white">
+          <td style="width:25%">Hospital</td>
+          <td style="width:25%">1 Bedded</td>
+          <td style="width:25%">2 Bedded</td>
+          <td style="width:25%">4 Bedded</td>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each privateWardList}}
+        <tr style="text:align:center">
+          <td style="width:25%" class>{{this.hospital}}</td>
+          {{#if this.priceOneBed}}
+          <td style="width:25%" class="selectable">${{this.priceOneBed}}</td>
+          {{else}}
+          <td style="width:25%">N/A</td>
+          {{/if}} {{#if this.priceTwoBed}}
+          <td style="width:25%" class="selectable">${{this.priceTwoBed}}</td>
+          {{else}}
+          <td style="width:25%">N/A</td>
+          {{/if}} {{#if this.priceFourBed}}
+          <td style="width:25%" class="selectable">${{this.priceFourBed}}</td>
+          {{else}}
+          <td style="width:25%">N/A</td>
+          {{/if}}
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    {{#if single}} {{else}}
+    <hr style="border:1px solid;margin-top:30px;margin-bottom:20px"> {{/if}}
+  </div>
+  {{#if single}}
+  <div style="float:right;padding-top:10px">
+    <button class="btn blue-madison" type="button" id="addButton">DONE</button>
+  </div>
+  <div style="float:right;padding-top:10px;padding-right:10px;margin-bottom:20px">
+    <button class="btn btn-default" type="button" id="cancelButton">CANCEL</button>
+  </div>
+  {{/if}}
+</template>
+<template name="addItemPackage">
+  <div class="row">
+    <div style="font-size:22pt;color:#656565;width:100%">2. SELECT "HAMPER"</div>
+    <div style="padding-bottom:10px">Click a cell to select hamper</div>
+    <div class="col-md-4 outside">
+      <div class="hamper-div" id="isBasic" style="height:100%;position: relative;">
+        <div style="height:100%;margin-left:16.666667%;position:absolute;margin-top:10px">
+          <img style="width:80%;height:90%" src="/img/basic.png" />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 outside">
+      <div class="hamper-div" id="isAdvanced" style="height:100%;position: relative;">
+        <div style="height:100%;margin-left:16.666667%;position:absolute;margin-top:10px">
+          <img style="width:80%;height:90%" src="/img/advanced.png" />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 outside">
+      <div class="hamper-div" id="isPremium" style="height:100%;position: relative;">
+        <div style="height:100%;margin-left:16.666667%;position:absolute;margin-top:10px">
+          <img style="width:80%;height:90%" src="/img/premium.png" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" style="padding-top:20px">
+    {{#each addIndex categories}}
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title" style="text-align:center">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{index}}">{{value}}</a>
+        </h4>
+      </div>
+      <div id="collapse{{index}}" class="panel-collapse collapse" style="margin:10px 10px 10px 10px">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <td style="text-align:center">Name</td>
+              <td style="text-align:center">Basic</td>
+              <td style="text-align:center">Advanced</td>
+              <td style="text-align:center">Premium</td>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each products value}} {{#if any this}}
+            <tr>
+              <td>{{this.productName}}</td>
+              <td style="text-align:center">
+                {{#if this.isBasic}}
+                <span>&#10004;</span>
+                {{/if}}
+              </td>
+              <td style="text-align:center">
+                {{#if this.isAdvanced}}
+                <span>&#10004;</span>
+                {{/if}}
+              </td>
+              <td style="text-align:center">
+                {{#if this.isPremium}}
+                <span>&#10004;</span>
+                {{/if}}
+              </td>
+            </tr>
+            {{/if}} {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {{/each}} {{#if single}} {{else}}
+    <hr style="border:1px solid;margin-top:30px;margin-bottom:20px"> {{/if}}
+  </div>
+  {{#if single}}
+  <div style="float:right;padding-top:10px">
+    <button style="background-color:#e5b856;border-radius:5px" type="button" id="addButton">DONE</button>
+  </div>
+  <div style="float:right;padding-top:10px;padding-right:10px;margin-bottom:20px">
+    <button style="background-color:#f37d8a;border-radius:5px" type="button" id="cancelButton">CANCEL</button>
+  </div>
+  {{/if}}
+</template>
+<template name="budgetinput">
+  <div class="row" style="min-height:200px;position:relative;margin-bottom:40px">
+    <div style="font-size:22pt;color:#656565;width:100%;">3. INPUT YOUR BUGDET HERE</div>
+    <form>
+      <input type="number" placeholder="Enter your budget here" min="0" value="{{userbudget}}" name="userbudget" style="background-color:white;color:gray;border:2px solid" required>
+    </form>
+  </div>
+</template>
+<template name="packagesconfirm">
+  <div style="float:right;padding-top:10px">
+    <button class="btn blue-madison" type="button" id="addButton">DONE</button>
+  </div>
+  <div style="float:right;padding-top:10px;padding-right:10px;margin-bottom:20px">
+    <button class="btn red-sunglo" type="button" id="cancelButton">CANCEL</button>
+  </div>
+</template>
+<template name="packages">
+  <div class="container" style="position:relative">
+    {{>addpackage}} {{>addItemPackage}} {{>budgetinput}}{{>packagesconfirm}}{{footer}}
+  </div>
+</template>
+<template name="packagePopup">
+  <div class="row">
+    <div class="col-md-12" style="padding-top:20px;padding-bottom:20px">
+      <div class="col-md-6" style="text-align:center">
+        <button type="button" style="width:80%;height:100px;border-radius:5px" id="popup-addpackage"><b style="font-size:20px">Add Hospital Package</b></button>
+      </div>
+      <div class="col-md-6" style="text-align:center">
+        <button type="button" style="width:80%;height:100px;border-radius:5px" id="popup-additem"><b style="font-size:20px">Add Item Package</b>
+          <br>(This will erase all existing data)</button>
+      </div>
+    </div>
+  </div>
+</template>
+<template name="editbudget">
+  <div class="row">
+    <div class="col-md-12" style="padding-top:20px;padding-bottom:20px;text-align:center">
+      <div> <b>Current Budget:</b> $
+        <input type="number" id="budget" value={{userbudget}}> </div>
+    </div>
+  </div>
+</template>
+<template name="addItem">
+  <div class="container">
+    <div class="col-md-6">
+      <div class="vertical-center" style="padding:10px 0px 10px 0px;">
+        <div class="col-md-4" style="text-align:right;font-weight:bold">
+          Category:
+        </div>
+        <div class="col-md-6">
+          <select id="category" class="selectpickercat show-tick form-control" name="categoryselect" data-live-search="true">
+            <optgroup label="Product Categories" data-subtext="Choose one">
+              {{#each categories}}
+              <option value="{{this}}">{{this}}</option>
+              {{/each}}
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <div class="vertical-center" style="padding:0px 0px 10px 0px;">
+        <div class="col-md-4" style="text-align:right;font-weight:bold">
+          Item Type:
+        </div>
+        <div class="col-md-6">
+          <select id="items" class="tra show-tick form-control" name="categoryselect" data-live-search="true">
+            <optgroup label="Product Categories" data-subtext="Choose one">
+
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <div class="vertical-center">
+        <div class="col-md-4" style="text-align:right;font-weight:bold">
+          Product:
+        </div>
+        <div class="col-md-6">
+          <select id="products" class="selectpicker show-tick form-control" name="categoryselect" data-live-search="true">
+            <optgroup label="Product Categories" data-subtext="Choose one">
+
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <div class="vertical-center" style="padding:10px 0px 10px 0px;">
+        <div class="col-md-4" style="text-align:right;font-weight:bold">
+          Cost:
+        </div>
+        <div class="col-md-6">
+          <input type="number" id="cost" required>
+        </div>
+      </div>
+      <div class="vertical-center">
+        <div class="col-md-4" style="text-align:right;font-weight:bold">
+          Quantity:
+        </div>
+        <div class="col-md-6">
+          <input type="number" value="1" class="balance" id="quantity" step="1">
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+
+<!--OLD CODES IN CASE OF EMERGENCY-->
+<!--<template name="budget">-->
+<!--<div class="statusupdate" style="background-color:#f9f9f9;padding-top:0px;margin-top:-0.2%;">-->
+<!--<img src="/img/budgetheader.png" style="max-height:120px;width:100%;height:auto;">-->
+<!--</div>-->
+<!--<div class="container-fluid">-->
+<!--<div class="col-md-8 col-md-offset-2" style="padding-top:20px">-->
+<!--<table class="table table-striped table-condensed table-bordered">-->
+<!--<thead>-->
+<!--<tr style="text-align:center">-->
+<!--<td style="width:55%">ITEM</td>-->
+<!--<td style="width:15%">QUANTITY</td>-->
+<!--<td style="width:15%">PRICE</td>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr>-->
+<!--{{#if selectedPackage}}-->
+<!--<td>-->
+<!--<div style="font-size:30px;font-weight:bold;padding-left:10px">Hospital Package</div>-->
+<!--<div style="padding-left:20px">-->
+<!--{{selectedHospital}}-->
+<!--<br> {{selectedWard}}-->
+<!--</div>-->
+<!--</td>-->
+<!--<td style="vertical-align:middle;text-align:center">-->
+<!--<div>1</div>-->
+<!--</td>-->
+<!--<td style="vertical-align:middle;text-align:center">-->
+<!--<div style="vertical-align: middle;text-align:center">-->
+<!--{{selectedPrice}}&nbsp;&nbsp;&nbsp;-->
+<!--<input type="image" class="delete" img src="/img/trash.png">-->
+<!--</div>-->
+<!--</td>-->
+<!--{{/if}}-->
+<!--</tr>-->
+<!--{{#each categories}}-->
+<!--<tr>-->
+<!--<td>-->
+<!--<div style="font-size:30px;font-weight:bold;padding-left:10px">{{this}}</div>-->
+<!--{{#each hamperDetails this}}-->
+<!--<div style="padding-left:20px">-->
+<!--{{this.name}}-->
+<!--</div>-->
+<!--{{/each}}-->
+<!--</td>-->
+<!--<td>-->
+<!--<div style="font-size:30px;font-weight:bold;padding-left:10px;visibility: hidden">1</div>-->
+
+<!--{{#each hamperDetails this}}-->
+<!--<div style="text-align:center">-->
+<!--{{#with currentUser}}-->
+<!--{{> editableText collection="users" field="quantity" context=parent type="number"}}-->
+<!--{{/with}}-->
+<!--</div>-->
+<!--{{/each}}-->
+<!--</td>-->
+<!--<td>-->
+<!--<div style="font-size:30px;font-weight:bold;padding-left:10px;visibility: hidden">1</div>-->
+<!--{{#each hamperDetails this}}-->
+<!--<div style="text-align:center">${{price this.quantity this.price}}&nbsp;&nbsp;&nbsp;-->
+<!--<input type="image" class="deleteThing" img src="/img/trash.png">-->
+<!--</div>-->
+<!--{{/each}}-->
+<!--</td>-->
+<!--</tr>-->
+<!--{{/each}}-->
+<!--<tr>-->
+<!--<td col-span="0">-->
+<!--<div style="padding-left:10px"><button class="addpackagediv"> Add Package  <i class="fa fa-plus"></i></button></div>-->
+<!--<div style="padding-left:10px"> <button class="additemdiv">Add Item <i class="fa fa-plus"></i></button>  </div>-->
+<!--</td>-->
+<!--<td></td>-->
+<!--<td></td>-->
+<!--</tr>-->
+<!--<tr>-->
+<!--<td style="text-align:right">Total:</td>-->
+<!--<td style="text-align:center">{{totalQ}}</td>-->
+<!--<td style="text-align:center">$ {{totalPrice}}</td>-->
+<!--</tr>-->
+<!--{{#if userbudget}}-->
+<!--<tr>-->
+<!--<td colspan="2" style="text-align:right">Budget:</td>-->
+<!--<td style="text-align:center">$ {{userbudget}}</td>-->
+<!--</tr>-->
+<!--<tr>-->
+<!--<td style="text-align:right" colspan="2">Balance:</td>-->
+<!--<td class="balance" style="text-align:center">$ {{balance}}</td>-->
+<!--</tr>-->
+<!--{{/if}}-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+<!--</div>-->
+<!--{{>footer}}-->
+<!--</template>-->
+<!--<template name="addpackage">-->
+<!--<div class="row" style="padding-bottom:15px">-->
+<!--<div style="font-size:22pt;color:#656565;width:100%">1. SELECT HOSPITAL PACKAGE-->
+<!--{{#with currentUser}}-->
+<!--{{> editableText collection="users" field="profile.packages.budget"}}-->
+<!--{{/with}}</div>-->
+<!--<div style="width:100%">-->
+<!--<span style="color:#b2b2b2;font-size:13pt">Select delivery type:</span>-->
+<!--<form style="display:inline;margin-left:5px" id="hospitalPackage">-->
+<!--<input type="radio" id="normalType" name="type" value="normal" checked>-->
+<!--<span style="color:#f37d8a;font-weight:bold;padding-right:5px"> Normal</span>-->
+<!--<input type="radio" id="cesareanType" name="type" value="cesarean">-->
+<!--<span style="color:#e5b856;font-weight:bold"> Cesarean</span>-->
+<!--</form>-->
+<!--</div>-->
+<!--<span style="color:#b2b2b2;font-size:10pt">Click a cell to select hospital package</span>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--<div style="font-weight:bold;font-size:20pt;padding-bottom:5px">Public Hospitals</div>-->
+<!--<table class="table table-striped pricing-table-public table-condensed">-->
+<!--<thead>-->
+<!--<tr style="background-color:#9a68eb;border-radius:5px;text:align:center;color:white">-->
+<!--<td style="width:25%">Hospital</td>-->
+<!--<td style="width:15%">Ward A</td>-->
+<!--<td style="width:15%">Ward B1</td>-->
+<!--<td style="width:15%">Ward B2+</td>-->
+<!--<td style="width:15%">Ward B2</td>-->
+<!--<td style="width:15%">Ward C</td>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--{{#each wardList}}-->
+<!--<tr style="text:align:center">-->
+<!--<td style="width:25%" class>{{this.hospital}}</td>-->
+<!--{{#if this.priceWardA}}-->
+<!--<td style="width:15%" class="selectable">${{this.priceWardA}}</td>-->
+<!--{{else}}-->
+<!--<td style="width:15%">N/A</td>-->
+<!--{{/if}} {{#if this.priceWardB1}}-->
+<!--<td style="width:15%" class="selectable">${{this.priceWardB1}}</td>-->
+<!--{{else}}-->
+<!--<td style="width:15%">N/A</td>-->
+<!--{{/if}} {{#if this.priceWardB2plus}}-->
+<!--<td style="width:15%" class="selectable">${{this.priceWardB2plus}}</td>-->
+<!--{{else}}-->
+<!--<td style="width:15%">N/A</td>-->
+<!--{{/if}} {{#if this.priceWardB2}}-->
+<!--<td style="width:15%" class="selectable">${{this.priceWardB2}}</td>-->
+<!--{{else}}-->
+<!--<td style="width:15%">N/A</td>-->
+<!--{{/if}} {{#if this.priceWardC}}-->
+<!--<td style="width:15%" class="selectable">${{this.priceWardC}}</td>-->
+<!--{{else}}-->
+<!--<td style="width:15%">N/A</td>-->
+<!--{{/if}}-->
+<!--</tr>-->
+<!--{{/each}}-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+
+<!--<div class="row">-->
+<!--<div style="font-weight:bold;font-size:20pt;padding-bottom:5px">Private Hospitals</div>-->
+<!--<table class="table table-striped pricing-table-private table-condensed">-->
+<!--<thead>-->
+<!--<tr style="background-color:#6fc191;border-radius:5px;text:align:center;color:white">-->
+<!--<td style="width:25%">Hospital</td>-->
+<!--<td style="width:25%">1 Bedded</td>-->
+<!--<td style="width:25%">2 Bedded</td>-->
+<!--<td style="width:25%">4 Bedded</td>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--{{#each privateWardList}}-->
+<!--<tr style="text:align:center">-->
+<!--<td style="width:25%" class>{{this.hospital}}</td>-->
+<!--{{#if this.priceOneBed}}-->
+<!--<td style="width:25%" class="selectable">${{this.priceOneBed}}</td>-->
+<!--{{else}}-->
+<!--<td style="width:25%">N/A</td>-->
+<!--{{/if}} {{#if this.priceTwoBed}}-->
+<!--<td style="width:25%" class="selectable">${{this.priceTwoBed}}</td>-->
+<!--{{else}}-->
+<!--<td style="width:25%">N/A</td>-->
+<!--{{/if}} {{#if this.priceFourBed}}-->
+<!--<td style="width:25%" class="selectable">${{this.priceFourBed}}</td>-->
+<!--{{else}}-->
+<!--<td style="width:25%">N/A</td>-->
+<!--{{/if}}-->
+<!--</tr>-->
+<!--{{/each}}-->
+<!--</tbody>-->
+<!--</table>-->
+<!--{{#if single}} {{else}}-->
+<!--<hr style="border:1px solid;margin-top:30px;margin-bottom:20px"> {{/if}}-->
+<!--</div>-->
+<!--{{#if single}}-->
+<!--<div style="float:right;padding-top:10px">-->
+<!--<button style="background-color:#e5b856;border-radius:5px" type="button" id="addButton">DONE</button>-->
+<!--</div>-->
+<!--<div style="float:right;padding-top:10px;padding-right:10px;margin-bottom:20px">-->
+<!--<button style="background-color:#f37d8a;border-radius:5px" type="button" id="cancelButton">CANCEL</button>-->
+<!--</div>-->
+<!--{{/if}}-->
+<!--</template>-->
+<!--<template name="addItemPackage">-->
+<!--<div class="row">-->
+<!--<div style="font-size:22pt;color:#656565;width:100%">2. SELECT "HAMPER"</div>-->
+<!--<div style="padding-bottom:10px">Click a cell to select hospital package</div>-->
+<!--<div class="col-md-4 outside">-->
+<!--<div class="hamper-div" id="isBasic" style="height:100%;position: relative;">-->
+<!--<div style="height:100%;margin-left:16.666667%;position:absolute;margin-top:10px">-->
+<!--<img style="width:80%;height:90%" src="/img/basic.png" />-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-4 outside">-->
+<!--<div class="hamper-div" id="isAdvanced" style="height:100%;position: relative;">-->
+<!--<div style="height:100%;margin-left:16.666667%;position:absolute;margin-top:10px">-->
+<!--<img style="width:80%;height:90%" src="/img/advanced.png" />-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-4 outside">-->
+<!--<div class="hamper-div" id="isPremium" style="height:100%;position: relative;">-->
+<!--<div style="height:100%;margin-left:16.666667%;position:absolute;margin-top:10px">-->
+<!--<img style="width:80%;height:90%" src="/img/premium.png" />-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row" style="padding-top:20px">-->
+<!--{{#each addIndex categories}}-->
+<!--<div class="panel panel-default">-->
+<!--<div class="panel-heading">-->
+<!--<h4 class="panel-title" style="text-align:center">-->
+<!--<a data-toggle="collapse" data-parent="#accordion" href="#collapse{{index}}">{{value}}</a>-->
+<!--</h4>-->
+<!--</div>-->
+<!--<div id="collapse{{index}}" class="panel-collapse collapse" style="margin:10px 10px 10px 10px">-->
+<!--<table class="table table-striped table-bordered">-->
+<!--<thead>-->
+<!--<tr>-->
+<!--<td>Name</td>-->
+<!--<td>Hamper 1</td>-->
+<!--<td>Hamper 2</td>-->
+<!--<td>Hamper 3</td>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--{{#each products value}}-->
+<!--<tr>-->
+<!--<td>{{this.name}}</td>-->
+<!--<td style="text-align:center">-->
+<!--{{#if this.isBasic}}-->
+<!--<span>&#10004;</span>-->
+<!--{{/if}}-->
+<!--</td>-->
+<!--<td style="text-align:center">-->
+<!--{{#if this.isAdvanced}}-->
+<!--<span>&#10004;</span>-->
+<!--{{/if}}-->
+<!--</td>-->
+<!--<td style="text-align:center">-->
+<!--{{#if this.isPremium}}-->
+<!--<span>&#10004;</span>-->
+<!--{{/if}}-->
+<!--</td>-->
+<!--</tr>-->
+<!--{{/each}}-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</div>-->
+<!--</div>-->
+<!--{{/each}} {{#if single}} {{else}}-->
+<!--<hr style="border:1px solid;margin-top:30px;margin-bottom:20px"> {{/if}}-->
+<!--</div>-->
+<!--{{#if single}}-->
+<!--<div style="float:right;padding-top:10px">-->
+<!--<button style="background-color:#e5b856;border-radius:5px" type="button" id="addButton">DONE</button>-->
+<!--</div>-->
+<!--<div style="float:right;padding-top:10px;padding-right:10px;margin-bottom:20px">-->
+<!--<button style="background-color:#f37d8a;border-radius:5px" type="button" id="cancelButton">CANCEL</button>-->
+<!--</div>-->
+<!--{{/if}}-->
+<!--</template>-->
+<!--<template name="budgetinput">-->
+<!--<div class="row" style="min-height:200px;position:relative;margin-bottom:40px">-->
+<!--<div style="font-size:22pt;color:#656565;width:100%;">3. INPUT YOUR BUGDET HERE</div>-->
+<!--<form>-->
+<!--<input type="text" placeholder="Enter your budget here" value="{{userbudget}}" name="userbudget" style="background-color:white;color:gray;border:2px solid;text-align:center" required>-->
+<!--</form>-->
+<!--</div>-->
+<!--</template>-->
+<!--<template name="packagesconfirm">-->
+<!--<div style="float:right;padding-top:10px">-->
+<!--<button style="background-color:#e5b856;border-radius:5px" type="button" id="addButton">DONE</button>-->
+<!--</div>-->
+<!--<div style="float:right;padding-top:10px;padding-right:10px;margin-bottom:20px">-->
+<!--<button style="background-color:#f37d8a;border-radius:5px" type="button" id="cancelButton">CANCEL</button>-->
+<!--</div>-->
+<!--</template>-->
+<!--<template name="packages">-->
+<!--<div class="statusupdate" style="background-color:#f9f9f9;padding-top:0px;margin-top:-0.2%;">-->
+<!--<img src="/img/budgetheader.png" style="max-height:120px;width:100%;height:auto;">-->
+<!--</div>-->
+<!--<div class="container" style="position:relative">-->
+<!--{{>addpackage}} {{>addItemPackage}} {{>budgetinput}}{{>packagesconfirm}}{{footer}}-->
+<!--</div>-->
+<!--</template>-->
+<!--<template name="packagePopup">-->
+<!--<div class="row">-->
+<!--<div class="col-md-12" style="padding-top:20px;padding-bottom:20px">-->
+<!--<div class="col-md-6" style="text-align:center">-->
+<!--<button type="button" style="width:80%;height:100px;background-color:#6ba1eb;border-radius:5px" id="popup-addpackage">Add Hospital Package</button>-->
+<!--</div>-->
+<!--<div class="col-md-6" style="text-align:center">-->
+<!--<button type="button" style="width:80%;height:100px;background-color:#e5b856;border-radius:5px" id="popup-additem">Add Item Package</button>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</template>-->
+<!--<template name="addItem">-->
+<!--<div class="statusupdate" style="background-color:#f9f9f9;padding-top:0px;margin-top:-0.2%;">-->
+<!--<img src="/img/budgetheader.png" style="max-height:120px;width:100%;height:auto;">-->
+<!--</div>-->
+<!--<div class="container">-->
+<!--<div class="col-md-6">-->
+<!--<div class="vertical-center" style="padding:10px 0px 10px 0px;">-->
+<!--<div class="col-md-4" style="text-align:right;font-weight:bold">-->
+<!--Category:-->
+<!--</div>-->
+<!--<div class="col-md-6">-->
+<!--<select id="category" class="selectpicker show-tick form-control" name="categoryselect" data-live-search="true">-->
+<!--<optgroup label="Product Categories" data-subtext="Choose one">-->
+<!--{{#each categories}}-->
+<!--<option value="{{this}}">{{this}}</option>-->
+<!--{{/each}}-->
+<!--</optgroup>-->
+<!--</select>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="vertical-center">-->
+<!--<div class="col-md-4" style="text-align:right;font-weight:bold">-->
+<!--Item:-->
+<!--</div>-->
+<!--<div class="col-md-6">-->
+<!--<select id="items" class="selectpicker show-tick form-control" name="categoryselect" data-live-search="true">-->
+<!--<optgroup label="Product Categories" data-subtext="Choose one">-->
+
+<!--</optgroup>-->
+<!--</select>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="vertical-center" style="padding:10px 0px 10px 0px;">-->
+<!--<div class="col-md-4" style="text-align:right;font-weight:bold">-->
+<!--Cost:-->
+<!--</div>-->
+<!--<div class="col-md-6">-->
+<!--<input type="text" value="$ {{cost}}" readonly required>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="vertical-center">-->
+<!--<div class="col-md-4" style="text-align:right;font-weight:bold">-->
+<!--Quantity:-->
+<!--</div>-->
+<!--<div class="col-md-6">-->
+<!--<input type="number" value="1" class="balance" id="quantity" step="1">-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</template>-->

@@ -1,0 +1,446 @@
+<head>
+  <!-- Basic Page Needs
+  ================================================== -->
+  <meta charset="utf-8">
+  <!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" /><![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Baby Planner</title>
+  <meta name="description" content="Baby Planner by NaN">
+  <meta name="keywords" content="Baby, maternity,children ">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Favicons
+  ================================================== -->
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/img/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/img/apple-touch-icon-114x114.png">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="/css/babyplanner.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/fonts/font-awesome/css/font-awesome.css"> -->
+  <!-- <link rel="stylesheet" type="text/css" href="/css/bootstrap-social.css"> -->
+  <link rel="stylesheet" type="text/css" href="/css/login.css">
+  <link rel="stylesheet" type="text/css" href="/css/font-awesome.css">
+  <!-- Slider
+  ================================================== -->
+  <link rel="stylesheet" type="text/css" href="/css/slick.css" />
+  <link rel="stylesheet" type="text/css" href="/css/slick-theme.css" />
+  <link rel=" stylesheet" type="text/css" href="/css/tinytools.progressbar.css">
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap-select.css">
+  <link rel="stylesheet" type="text/css" href="/css/components.css">
+  <link rel="stylesheet" type="text/css" href="/css/responsive.css">
+  <link rel="stylesheet" type="text/css" href="/css/introjs.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/introjs-nassim.css"> -->
+
+  <!-- Stylesheet
+  ================================================== -->
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/css/responsive.css">
+  <link rel="stylesheet" type="text/css" href="/css/nv.d3.css">
+
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+
+
+  <!-- Javascripts
+  ================================================== -->
+  <script type="text/javascript" src="/js/tinytools.progressbar.js"></script>
+  <script type="text/javascript" src="/js/bootstrap-select.js"></script>
+  <script type="text/javascript" src="/js/moment.min.js"></script>
+  <script type="text/javascript" scr="/js/intro.js"></script>
+  <script type="text/javascript" src="/js/nv.d3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.0/jquery.scrollTo.min.js"></script>
+  <script async src="//cdn.embedly.com/widgets/platform.js" charset="UTF-8"></script>
+  <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,700,300,600,800,400' rel='stylesheet' type='text/css'>
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+  <![endif]-->
+  <style>
+      text {
+          font: 12px sans-serif;
+      }
+      svg {
+          display: block;
+      }
+      #test2 {
+          height: 350px !important;
+          width: 400px !important;
+      }
+      #test1 {
+          height: 400px !important;
+          width: 400px !important;
+      }
+      .nvd3.nv-pie.nv-chart-donut2 .nv-pie-title {
+          fill: rgba(70, 107, 168, 0.78);
+      }
+      .nvd3.nv-pie.nv-chart-donut1 .nv-pie-title {
+          opacity: 0.4;
+          fill: rgba(224, 116, 76, 0.91);
+      }
+  </style>
+
+</head>
+
+<template name="landing">
+  {{>navbar}} {{>homepage}} {{>aboutus}} {{>services}} {{>contact}} {{>footer}}
+</template>
+
+
+<!-- Navigation
+==========================================-->
+<template name="navbar">
+  <nav id="tf-menu" class="navbar navbar-default navbar-fixed-top" style="background-color:#76d0e5;">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <img src="/img/navbarlogo4.png" style="max-height:57px;padding-top:1%;">
+        </a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-left" style="padding-top:0.5%;">
+          <li><a href="#tf-home" id="nav-tf-home" class="page-scroll">Home</a></li>
+          <li><a href="#tf-about" id="nav-tf-about" class="page-scroll">About</a></li>
+          <li><a href="#tf-services" id="nav-tf-services" class="page-scroll">Services</a></li>
+          <li><a href="#tf-contact" id="nav-tf-contact" class="page-scroll">Contact</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="#" id="register">
+              <button type="button" class="btn btn-primary" id="navbarbutton" style="background-color:#f37d8a;border-color:#f37d8a;border-radius:20px;">Start Planning</button>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+</template>
+
+<!-- Home Page
+==========================================-->
+<template name="homepage">
+  <div id="tf-home" class="section" style="min-height:650px;">
+    <!-- <div class="about-container" style="position: relative;
+    top: 45%;transform: 			translateY(60%);"> -->
+    <div class="about-container" style="position: relative;
+    top: 45%;transform: 			translateY(10%);">
+      <img src="/img/landingheader2.png" class="img-responsive" style="margin-left:auto;margin-right:auto;display:block;max-height:200px;">
+      <div style="padding-top:50px;">
+        <img src="/img/landingheader.png" class="img-responsive" style="margin-left:auto;margin-right:auto;display:block;">
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<!-- doesn't seem to be used by anyone? -->
+<template name="symptoms">
+  <tr>
+    <td>{{this}}</td>
+  </tr>
+</template>
+
+
+
+<template name="detailspage">
+  <div class="at-form">
+    <div class="at-title">
+      <h3>Help us fill in these details for us to know you better.</h3>
+    </div>
+    <form class="info" id="at-pwd-form" role="form">
+      <fieldset>
+        <div class="at-input form-group has-feedback">
+          <label class="control-label"> What is your name?</label>
+          {{#if facebook}}
+          <input class="form-control" type="text" name="name" value="{{facebook}}" required> {{else}}
+          <input class="form-control" type="text" name="name" required> {{/if}}
+        </div>
+        <div class="at-input form-group has-feedback">
+          <label class="control-label">Key in your birthdate:</label>
+          <input class="form-control" type="date" name="birthdate" required max="{{today}}">
+        </div>
+        <div class="at-input form-group has-feedback">
+          <label class="control-label">What is your height (cm)?</label>
+          <input class="form-control" type="number" name="height" required>
+        </div>
+        <div class="at-input form-group has-feedback">
+          <label class="control-label">What is your weight before pregnancy(kg)?</label>
+          <input class="form-control" type="number" name="weight" required>
+        </div>
+
+        <div class="at-input form-group has-feedback">
+          {{#if checkbox}}
+          <label class="control-label">Please key in your <b>last period</b></label>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" class="noduedate" checked> I do not know my due date
+            </label>
+          </div>
+          <input class="form-control" type="date" name="lastperiod" required max="{{today}}"> {{else}}
+          <label class="control-label">Please key in your <b>due date</b></label>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" class="noduedate"> I do not know my due date
+            </label>
+          </div>
+          <input class="form-control" type="date" name="duedate" required max="{{maxDate}}" min="{{today}}"> {{/if}}
+        </div>
+        <button type="submit" class="at-btn btn btn-lg btn-block btn-default" id="at-btn">
+          Start now!
+        </button>
+      </fieldset>
+    </form>
+  </div>
+</template>
+
+
+<template name="atFormTemplate">
+  {{>atForm}}
+</template>
+
+<template name="loggedInTemplate">
+  {{>loggedInNavBar}} {{>yield}}
+</template>
+
+<template name="userprofile">
+  <div class="at-form">
+    {{#if changesuccess}}
+    <div class="at-title">
+      <h3> Your settings have been changed</h3>
+    </div>
+    {{else}}
+    <div class="at-title">
+      <h3> Change your basic account setting here</h3>
+    </div>
+    {{/if}}
+    <form class="updateInfo" id="at-pwd-form" style="text-align:center">
+      <fieldset>
+        <div class="at-input form-group has-feedback">
+          <label class="control-label"> Name :</label>
+          <input class="form-control" type="text" value="{{name}}" name="name" required>
+        </div>
+        <div class="at-input form-group has-feedback">
+          <label class="control-label">Email Address :</label>
+          <input class="form-control" type="text" value="{{email}}" name="email" required>
+        </div>
+        <div class="at-input form-group has-feedback">
+          <label class="control-label">Due Date :</label>
+          <input class="form-control" type="date" value="{{duedate}}" name="duedate" required>
+        </div>
+        <div class="at-input form-group has-feedback">
+          <label class="control-label">Weight(kg) :</label>
+          <input class="form-control" type="text" value="{{weight}}" name="weight" required>
+        </div>
+        <div class="at-input form-group has-feedback">
+          <label class="control-label">Height(cm)</label>
+          <input class="form-control" type="text" value="{{height}}" name="height" required>
+        </div>
+
+        <button type="submit" class="at-btn btn btn-lg btn-block btn-default" id="at-btn">
+          Change Settings
+        </button>
+      </fieldset>
+    </form>
+  </div>
+
+</template>
+<!-- Main Page
+==========================================-->
+<template name="loggedInNavBar">
+  <nav id="tf-menu" class="navbar navbar-default">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/dashboard" style="line-height:40px">
+          <img src="/img/navbarlogo4.png" style="max-height:40px;margin: auto;vertical-align: middle;display: inline-block;">
+        </a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-left">
+          <li><a href="/dashboard" class="newNavItems">My Pregnancy</a></li>
+          <li><a href="/journal" class="newNavItems">Journal</a></li>
+          <li><a href="/budget" class="newNavItems">Budget</a></li>
+          <li><a href="/guides" class="newNavItems">Guides</a></li>
+          <li><a href="/shop" class="newNavItems">Shops</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a id="drop3" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+              <i class="fa fa-user"></i> {{userName}}
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="#" id="profilepage">Profile</a></li>
+              {{#if isFacebook}} {{else}}
+              <li><a href="#" id="changepassword">Change Password</a></li>
+              {{/if}}
+              <li role="separator" class="divider"></li>
+              <li><a href="#" id="logout">Log Out</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+  </nav>
+</template>
+
+<!-- About Us Page
+==========================================-->
+<template name="aboutus">
+  <div id="tf-about" class="section">
+    <div class="container">
+      <div class="row vertical-center">
+        <div class="col-md-4">
+          <img src="/img/landingbaby.png" class="img-responsive">
+        </div>
+        <div class="col-md-8 ">
+          <div class="about-text">
+            <div class="section-title">
+              <img src="/img/landingabout.png" class="img-responsive">
+              <h2 style="margin-top:3%;">
+                <strong>WE'RE ALL ABOUT THE BABY</strong>
+              </h2>
+              <hr>
+              <div class="clearfix"></div>
+            </div>
+            <p class="intro">We are a one stop solution for Mother's at different stages of their pregnancy. We believe in using technology to aid mothers in this difficult journey to create a pregnancy experience like never before.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- Services Section
+==========================================-->
+<template name="services">
+  <div id="tf-services" class="section" style="background-color:#76d0e5;min-height:570px;">
+    <div class="container">
+      <div class="section-title center">
+        <img src="/img/landingservices.png" class="img-responsive" style="margin-left:auto;margin-right:auto;display:block;">
+        <!-- <div class="line">
+        <hr>
+        </div>
+        <div class="clearfix"></div> -->
+        <!-- <small><em>Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</em></small> -->
+      </div>
+      <div class="space"></div>
+      <div class="row" style="text-align:center">
+        <div class="col-md-4 col-sm-6 service">
+          <img src="/img/landinginformation.png" class="img-responsive" style="margin-left:auto;margin-right:auto;display:block;">
+          <h4>
+            <strong>Information</strong>
+          </h4>
+          <p>We provide constant flow of information on what is happening to your body as well as your baby to let you understand your pregnancy a bit better, day by day.</p>
+        </div>
+
+        <div class="col-md-4 col-sm-6 service">
+          <img src="/img/landingStatus.png" class="img-responsive" style="margin-left:auto;margin-right:auto;display:block;">
+          <h4>
+            <strong>Status Tracking</strong>
+          </h4>
+          <p>Never again have to worry about forgetting the symptoms you felt for the past months. Our user friendly interface would allow retrieving all these data be as easy as ABC.</p>
+        </div>
+
+        <div class="col-md-4 col-sm-6 service">
+          <img src="img/landingbudget.png" class="img-responsive" style="margin-left:auto;margin-right:auto;display:block;">
+          <h4>
+            <strong>Budgeting</strong>
+          </h4>
+          <p>Here at babyplanner.sg, we understand that budget is a huge concern for many mothers. Therefore we provide a range of services such as comparison of prices across hospitals, templates on how much other mother's spent and many more so that you
+            can make a better decision.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<!-- Contact Section
+==========================================-->
+<template name="contact">
+  <div id="tf-contact" class="section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+          <div class="section-title center">
+            <img src="/img/contactheader.png" class="img-responsive" style="margin-left:auto;margin-right:auto;display:block;">
+            <div class="clearfix"></div>
+          </div>
+
+          <form>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <!-- <label for="exampleInputEmail1">Email address</label> -->
+                  <input type="email" class="form-control" id="exampleInputEmail1" placeholder="NAME">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <!-- <label for="exampleInputPassword1">Password</label> -->
+                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="EMAIL">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <!-- <label for="exampleInputEmail1">Message</label> -->
+              <textarea class="form-control" rows="3" placeholder="YOUR MESSAGE HERE"></textarea>
+            </div>
+            <button type="submit" class="btn tf-btn btn-default" style="background-color:#f26d7d;border-radius:10px;">Submit</button>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</template>
+
+<!-- <template name="footer">
+  <div class="container-fluid" style="background-color:#76d0e5;min-height:50px;">
+  </div>
+</template> -->
+
+
+
+
+<template name="footer">
+  <nav id="footer" style="background-color:#76d0e5">
+    <div class="container" style="background-color:#76d0e5">
+      <div class="pull-left fnav">
+        <p>ALL RIGHTS RESERVED. COPYRIGHT © 2015. Team NaN</p>
+      </div>
+      <div class="pull-right fnav">
+        <ul class="footer-social">
+          <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+          <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+          <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+          <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</template>

@@ -1,0 +1,738 @@
+<template name="myPregnancy">
+    {{>mummydash}} {{>babydash}}{{>footer}}
+
+</template>
+
+<!-- Carousel for Mummy Dashboard
+==========================================-->
+<template name="carousel">
+  <div id="carousel">
+    {{{ photos }}}
+  </div>
+</template>
+
+<!-- Mummy Dashboard
+==========================================-->
+<template name="mummydash">
+  <div class="container-fluid" style="background-image: url(/img/babybackground.png);padding-bottom:2%;padding-top:20px">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+          <div class="portlet box yellow" id="tProgress" data-intro="{{findTool "MY PROGRESS"}}" data-step="1">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-question-circle fa-5x red-tooltip" data-toggle="tooltip" data-placement="left" title="{{findTool "MY PROGRESS"}}" style="position:absolute;top:2px;right:0px;font-size:115%;"></i>
+                <i class="fa fa-bar-chart"></i>
+                <span class="caption-subject bold uppercase"> My progress</span>
+              </div>
+            </div>
+            <div class="portlet-body">
+              <div class="row fullwidth">
+                <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12 vertical-center">
+                  <div class="days-counter" style="text-align:center">
+                    <span class="days-span">{{daysleft}}</span>
+                    Day(s) left
+                  </div>
+                </div>
+                <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12" id="responsiveProgressBar" style="margin-top:2%;">
+                  <div class="ProgressBar"></div>
+                  {{#if trimester1}}
+                  <p style="text-align:center;font-size:120%"><b>1st Trimester</b></p>
+                  {{else}} {{#if trimester2}}
+                  <p style="text-align:center;font-size:120%"><b>2nd Trimester</b></p>
+                  {{else}}
+                  <p style="text-align:center;font-size:120%"><b>3rd Trimester</b></p>
+                  {{/if}}{{/if}}
+                </div>
+
+                <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                  <div class="days-counter" style="text-align:center">
+                    <span class="days-span">{{currentWeek}}</span>
+                    Week
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="portlet box red" id="tCarousel" data-intro="{{findTool "MY BABY BUMP"}}" data-step="2" data-position="right">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-question-circle fa-5x red-tooltip" data-toggle="tooltip" data-placement="left" title="{{findTool "MY BABY BUMP"}}" style="position:absolute;top:2px;right:0px;font-size:115%;"></i>
+                <i class="fa fa-camera-retro"></i>
+                <span class="caption-subject bold uppercase"> My baby bump</span>
+              </div>
+            </div>
+            <div class="portlet-body" style="min-height:400px">
+              <div class="row">
+                <div class="col-md-10 col-sm-10 col-md-offset-1 col-xs-offset-1 " style="padding-top:15px">
+                  {{> carousel}}
+                </div>
+                <div class="col-md-8 col-md-offset-4 col-xs-8 col-xs-offset-3 col-sm-8 col-sm-offset-3" style="display:table">
+                  <span style="font-size:120%;font-weight:bold;display:table-cell;vertical-align:middle;padding-left:10px">Week {{photoWeek}}</span>
+                  <button id="addEditCarousel" class="btn blue-hoki" role="button" style="float:right">Add/Edit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="portlet box red" id="tBodyHap" data-intro="{{findTool "WHATS HAPPENING TO YOUR BODY"}}" data-step="3" data-position="left">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-question-circle fa-5x red-tooltip" data-toggle="tooltip" data-placement="left" title="{{findTool "WHATS HAPPENING TO YOUR BODY"}}" style="position:absolute;top:2px;right:0px;font-size:115%;"></i>
+                <i class="fa fa-heartbeat"></i>
+                <span class="caption-subject bold uppercase"> What's happening to your body?</span>
+              </div>
+            </div>
+            <div class="portlet-body vertical-center" style="min-height:400px">
+              <div class="row">
+                <div class="col-md-12" style="padding-bottom:30px">
+                  <div style="text-align:center;font-size:18px">{{weeklytip}}</div>
+                </div>
+                <div class="col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+                  <div class="portlet gren">
+                    <div class="portlet-title">
+                      <div class="caption">
+                        <span class="caption-subject bold uppercase">Symptoms</span>
+                        <span class="caption-helper">to expect</span>
+                      </div>
+                    </div>
+                    <div class="portlet-body">
+                      <ul style="list-style-position: inside;">
+                        {{#each symptomsArray}}
+                        <li>{{this}}</li>
+                        {{/each}}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-md-offset-0 col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+                  <div class="portlet gren">
+                    <div class="portlet-title">
+                      <div class="caption">
+                        <span class="caption-subject bold uppercase">My vitals</span>
+                        <span class="caption-helper">statistics</span>
+                      </div>
+                    </div>
+                    <div class="portlet-body">
+                      <div class="row">
+                        <div class="col-md-4 col-xs-4 col-sm-4" style="text-align:center">
+                          <div style="font-size:150%;margin-bottom:10px">Current
+                            <br>Weight:</div>
+                          <div class="col-md-12" style="border:solid 1px #e5b856;text-align:center">
+                            <span style="font-size:120%">
+                              {{weight}}</span>kg
+                          </div>
+                        </div>
+                        <div class="col-md-4 col-xs-4 col-sm-4" style="text-align:center">
+                          <div style="font-size:150%;margin-bottom:10px">My
+                            <br>BMI:</div>
+                          <div class="col-md-12" style="border:solid 1px #e5b856;text-align:center">
+                            <div style="font-size:120%">
+                              {{bmi}}</div>
+                          </div>
+                        </div>
+                        <div class="col-md-4 col-xs-4 col-sm-4" style="text-align:center">
+                          <div style="font-size:150%;margin-bottom:10px">Ideal
+                            <br>Weight:</div>
+                          <div class="col-md-12" style="border:solid 1px #e5b856;text-align:center">
+                            <span style="font-size:120%">
+                              {{idealweight}}</span>kg
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="babydash">
+  <div class="container-fluid" style="background-image: url(/img/babybackground.png);padding-bottom:2%;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="portlet box green" id="tBabySize" data-intro="{{findTool "BABY SIZE"}}" data-step="4" data-position="right">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-question-circle fa-5x red-tooltip" data-toggle="tooltip" data-placement="left" title="{{findTool "BABY SIZE"}}" style="position:absolute;top:2px;right:0px;font-size:115%;"></i>
+                <i class="fa fa-child"></i>
+                <span class="caption-subject bold uppercase"> baby size</span>
+              </div>
+            </div>
+            <div class="portlet-body vertical-center" style="min-height:400px">
+              <div class="row fullwidth">
+                <div class="col-md-12">
+                  <div style="font-size:120%;text-align:center">{{photodesc}}</div>
+                </div>
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12" style="text-align:center">
+                  <img src="/cfs/files/images/{{photourl}}" style="padding-top:5%; max-width:250px; max-height:700px;">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="portlet box green" id="tBabyName" data-intro={{findTool "BABY NAME"}} data-step="5">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-question-circle fa-5x red-tooltip" data-toggle="tooltip" data-placement="left" title="{{findTool "BABY NAME"}}" style="position:absolute;top:2px;right:0px;font-size:115%;"></i>
+                <i class="fa fa-venus-mars"></i>
+                <span class="caption-subject bold uppercase"> baby name</span>
+              </div>
+            </div>
+            <div class="portlet-body vertical-center" style="min-height:167px">
+              <div class="fullwidth vertical-center" style="width:100%">
+                <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
+                  {{#if isGenderNull}}
+                  <div style="text-align:center">
+                    <button type="button" class="btn btn-primary" style="background-color:#2e6da4;">Boy</button>
+                    <button type="button" class="btn btn-danger">Girl</button>
+                  </div>
+                  {{/if}}
+                  <div>
+                    {{#if isBoy}}
+                    <div class="boysymbol" style="min-height:100px"></div>
+                    <div style="text-align:center">
+                      <button type="button" id="changeGender" class="btn btn-primary" style="background-color:#2e6da4;">Change Gender</button>
+                    </div>
+                    {{else}} {{#if isGirl}}
+                    <div class="girlsymbol" style="min-height:100px"></div>
+                    <div style="text-align:center">
+                      <button type="button" id="changeGender" class="btn btn-danger">Change Gender</button>
+                    </div>
+                    {{else}} {{/if}} {{/if}}
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
+                  <div class="col-md-12" style="text-align:center;font-size:120%;font-weight:bold">
+                    Your Baby's Name:
+                  </div>
+                  <div class="col-md-12" style="text-align:center">
+                    {{#if currentUser}}
+
+                    <h1 class="editable-text-trigger" style="color:#6ecff3;">
+                      <!-- <br> {{> editableText context=example collection="posts" field="name" placeholder="Input baby name"}} -->
+                      {{#with currentUser}}&nbsp;{{> editableText collection="users" field="profile.babyName" placeholder="Input baby name"}} {{/with}}
+                    </h1>
+                    {{/if}}
+                  </div>
+                  <div class="col-md-12">
+                    <div class="col-md-12" style="text-align:center;font-size:120%;font-weight:bold">
+                      Your Baby's Age:
+                    </div>
+                    <div class="col-md-12" style="text-align:center;font-size:120%">
+                      {{currentWeek}} weeks old
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="portlet box green" id="tBabyHap" data-intro={{findTool "WHATS HAPPENING TO YOUR BABY"}} data-step="6" data-position="left">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-question-circle fa-5x red-tooltip" data-toggle="tooltip" data-placement="left" title="{{findTool "WHATS HAPPENING TO YOUR BABY"}}" style="position:absolute;top:2px;right:0px;font-size:115%;"></i>
+                <i class="fa fa-heartbeat"></i>
+                <span class="caption-subject bold uppercase"> what's happening to your baby?</span>
+              </div>
+            </div>
+            <div class="portlet-body vertical-center" style="min-height:167px">
+              <div class="fullwidth">
+                <div class="col-md-12" style="text-align:center;font-size:18px">{{whathapbaby}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="portlet box purple" id="tContraction" data-intro="{{findTool "CONTRACTION TRACKER"}}" data-step="7" data-position="right">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-question-circle fa-5x red-tooltip" data-toggle="tooltip" data-placement="left" title="{{findTool "CONTRACTION TRACKER"}}" style="position:absolute;top:2px;right:0px;font-size:115%;"></i>
+                <i class="fa fa-clock-o"></i>
+                <span class="caption-subject bold uppercase"> contraction tracker</span>
+              </div>
+            </div>
+            <div class="portlet-body vertical-center" style="min-height:167px">
+              <div class="fullwidth">
+                <div class="col-md-12" style="padding-bottom:30px;padding-top:30px;text-align:center">
+                  <div class="time"></div>
+                  <input type="button" class="btn btn-default btn-circleContraction" style="color:white" value="Start" />
+                  <p class="showTimerKicks" style="text-align:center">
+                    <br>Duration: {{clock}}
+                    <br>
+                  </p>
+                  <input type="button" class="btn btn-default btn-circleContractionStop" style="color:white" value="Stop" />
+                </div>
+                <table class="tracker">
+                  <thead>
+                    <tr style="background-color:#8e5fa2;color:white;height:50px;text-align:center">
+                      <td>Date</td>
+                      <td>Start Time</td>
+                      <td>End Time</td>
+                      <td>Duration</td>
+                      <td>Time between Contractions</td>
+                    </tr>
+                  </thead>
+                </table>
+                <div class="col-md-12" style="overflow: scroll;height:70px">
+                  <table class="tracker">
+                    <tbody>
+                      {{#each testEfficientContraction}}
+                      <tr style="text-align:center">
+                        <td class="contractionright">{{formatDate startDate}}</td>
+                        <td class="contractionright">{{#if startTime}} {{startTime}} {{else}} 00:00:00 {{/if}}</td>
+                        <td class="contractionright">{{endTime}}</td>
+                        <td class="contractionright">{{totalDuration}}</td>
+                        <td>{{frequency}}
+                          <input type="image" class="contractionTrash" img src="img/trash.png" style="vertical-align: middle; float:right;padding-top:2.5%;">
+                        </td>
+                      </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="portlet box red" id="tKick" data-intro="{{findTool "KICK COUNTER"}}" data-step="8" data-position="left">
+            <div class="portlet-title">
+              <div class="caption">
+                <i class="fa fa-question-circle fa-5x red-tooltip" data-toggle="tooltip" data-placement="left" title="{{findTool "KICK COUNTER"}}" style="position:absolute;top:2px;right:0px;font-size:115%;"></i>
+                <i class="fa fa-futbol-o"></i>
+                <span class="caption-subject bold uppercase"> Kick Counter</span>
+              </div>
+            </div>
+            <div class="portlet-body vertical-center" style="min-height:167px">
+              <div class="fullwidth">
+                <div class="col-md-12" style="padding-bottom:30px;padding-top:30px;text-align:center">
+                  <div class="time"></div>
+                  <input type="button" class="btn btn-default btn-circleKick" style="color:white;" value="Start" />
+                  <p class="showTimerKicks2">
+                    Duration: {{clock}}
+                    <br> No.of Kicks: {{kicks}}
+                  </p>
+                  <input type="button" class="btn btn-default btn-circleKickStop" style="color:white;float:left;bottom: 0;left:0;position: absolute;margin-left:2%;margin-bottom:2%;" value="Stop" />
+                  <input type="image" class="kick2" src="img/kickbutton.png">
+                </div>
+                <table class="tracker">
+                  <thead>
+                    <tr style="background-color:#cb5a5e;color:white;height:50px;text-align:center">
+                      <td>Date</td>
+                      <td>Start Time</td>
+                      <td>Duration</td>
+                      <td>Kick Count</td>
+                    </tr>
+                  </thead>
+                </table>
+                <div class="col-md-12" style="overflow: scroll; height:70px">
+                  <table class="tracker">
+                    <tbody style="height: 70px;overflow-y: auto;">
+                      {{#each testEfficientKick}}
+                      <tr style="text-align:center">
+                        <td class="kickright">{{formatDate startDate}}</td>
+                        <td class="kickright">{{startTime}}</td>
+                        <td class="kickright">{{totalDuration}}</td>
+                        <td>{{noOfKicks}}
+                          <div style="float:right;">
+                            <input type="image" class="kickTrash" img src="img/trash.png" style="vertical-align: middle; float:right;padding-top:25%;">
+                          </div>
+                        </td>
+                      </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="editCarousel">
+  <div class="container-fluid" id="pregnancy" style="background-image: url(/img/babybackground.png);padding-bottom:2%;">
+    <div class="container" style="text-align:center;margin-top:5%;">
+      <div class="col-md-12">
+        <div class="portlet box yellow">
+          <div class="portlet-title">
+            <div class="caption">
+              <i class="fa fa-child"></i>
+              <span class="caption-subject bold uppercase">View/edit photos</span>
+            </div>
+          </div>
+          <div class="portlet-body vertical-center">
+            <div class="col-md-12" style="overflow-x:scroll;max-height:730px;">
+              {{#each getPhoto}}
+              <div class="col-md-4" style="margin-top:40px;">
+                <div class="col-md-12">
+                  <p style="font-size:150%;"> <b>Week &nbsp;{{index}}</b>    <i id="removeCarousel" style="float:right" class="fa fa-times"></i>
+                  </p>
+                </div>
+                <div class="col-md-12">
+                  <img src="{{value}}" style="height:200px;max-width: 100%;">
+                </div>
+                <div class="col-md-12">
+                  <div class="col-md-6" style="margin-top:10px">
+                    <form style="float:right">
+                      <label for="uploadPhoto" class="btn red custom-file-upload">
+                        Choose file
+                      </label>
+                      <input type="file" accept="image/*" name="uploadPhoto" id="uploadPhoto" class="myFileInput">
+                    </form>
+                  </div>
+                  <div class="col-md-6" style="margin-top:10px;float:right">
+                    <label class="capture btn blue-madison photobutton" value="Take Photo">Take Photo!</label>
+                  </div>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-12">
+        <a href="/dashboard">
+          <button type="button" class="btn btn-primary" style="float:right;margin-top:1%;">Done</button>
+        </a>
+      </div>
+    </div>
+  </div>
+  {{>footer}}
+
+</template>
+
+
+
+<!-- OLD CODES BELOW-->
+
+<!--&lt;!&ndash; Carousel for Mummy Dashboard-->
+<!--==========================================&ndash;&gt;-->
+<!--<template name="carousel">-->
+<!--<div id="carousel">-->
+<!--{{{ photos }}}-->
+<!--</div>-->
+<!--</template>-->
+
+<!--&lt;!&ndash; Mummy Dashboard-->
+<!--==========================================&ndash;&gt;-->
+<!--<template name="mummydash">-->
+<!--<div class="mummy-container" id="pregnancy" style="background-image: url(/img/babybackground.png);padding-bottom:4%;">-->
+<!--<div class="statusupdate" style="background-color:#f9f9f9">-->
+<!--<img src="/img/mypregnancy.png" style="max-height:120px;max-width:400px;height:auto;width:auto;">-->
+<!--</div>-->
+
+<!--<div class="container" id="pregnancy" style="margin-top:2%;">-->
+
+<!--<div class="container" id="pregnancy">-->
+<!--<div class="mummysplit3" id="pregnancy">-->
+<!--<div class="row" id="pregnancy" style="background-color:white;border-radius:5px;">-->
+<!--<div class="row col-md-12" id="pregnancy">-->
+<!--<div class="col-md-offset-4 col-md-4" id="header" style="background-color:#6ba1eb;margin-top:-2%;border-radius:5px;">-->
+<!--<p style="color:white;min-height: 20px;font-size:130%;"> My Progress </p>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-2 vertical-center">-->
+<!--<div class="days-counter">-->
+<!--<span class="days-span">{{daysleft}}</span>-->
+<!--Day(s) left-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-8" id="responsiveProgressBar" style="margin-top:2%;">-->
+
+<!--<div class="ProgressBarSample"></div>-->
+<!--{{#if trimester1}}-->
+<!--<p style="text-align:center;font-size:120%"><b>1st Trimester</b></p>-->
+<!--{{else}} {{#if trimester2}}-->
+<!--<p style="text-align:center;font-size:120%"><b>2nd Trimester</b></p>-->
+<!--{{else}}-->
+<!--<p style="text-align:center;font-size:120%"><b>3rd Trimester</b></p>-->
+<!--{{/if}}{{/if}}-->
+<!--</div>-->
+
+<!--<div class="col-md-2">-->
+<!--<p style="font-size:150%"> <b>Week <br>{{currentWeek}}</b></p>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="mummysplit3" id="pregnancy">-->
+<!--<div class="row col-md-4" id="pregnancy" style="background-color:white; margin-top:3%;border-radius:5px;min-height:522px;">-->
+<!--<div class="row col-md-12" id="pregnancy">-->
+<!--<div class="row col-md-offset-4 col-md-5" id="header" style="background-color:#6fc191;margin-top:-2%;border-radius:5px;min-height:60px;margin-top:-5%;">-->
+<!--<p style="color:white;min-height: 20px;font-size:130%;"> My Baby-->
+<!--<br> Bump</p>-->
+<!--</div>-->
+<!--&lt;!&ndash; <div class="row col-md-12" style="padding-left:20%;">-->
+<!--{{> carousel}}-->
+<!--<br>-->
+<!--<div class="col-md-12" style="margin-left:-22%;">-->
+<!--<p><a href="#" class="btn btn-info" role="button" style="float:left;border-radius:25px;">Add/Edit</a><b style="font-size:120%;">Week {{photoWeek}}</b></p>-->
+<!--</div>-->
+<!--<br>-->
+<!--</div> &ndash;&gt;-->
+<!--<div class="row col-md-12" id="responsiveCarousel" style="padding-left:20%;padding-right:20%;">-->
+<!--{{> carousel}}-->
+<!--<br>-->
+<!--<p style="padding-left:50px;"><b>Week {{photoWeek}}</b><a href="#" style="float:right;padding-right:25px;">Edit</a></p>-->
+<!--<br>-->
+<!--<form>-->
+<!--<input type="file" name="uploadPhoto" id="uploadPhoto" class="myFileInput">-->
+<!--</form>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row col-md-8" id="pregnancy" style="margin-left:3%;margin-top:3%;">-->
+<!--<div class="row col-md-12" id="pregnancy" style="background-color:white; min-height:256px;width:100%;border-radius:5px;margin-left:2%;margin-bottom:3%;">-->
+<!--<div class="row col-md-offset-4 col-md-4" id="header" style="background-color:#f37d8a;margin-top:-2%;border-radius:5px;min-height:60px;">-->
+<!--<p style="color:white;min-height: 20px;font-size:130%;"> What's happening-->
+<!--<br> to your body? </p>-->
+<!--</div>-->
+<!--<div class="row col-md-12" id="pregnancy" style="margin-top:3%;font-size:120%">-->
+<!--<div>{{weeklytip}}</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row">-->
+<!--<div class="row col-md-4" id="pregnancy" style="margin-top:3%;background-color:white;border-radius:5px;min-height:220px;margin-left:4%;">-->
+<!--<div class="row col-md-12">-->
+<!--<div class="row col-md-offset-3 col-md-9" id="header" style="background-color:#9a68eb;margin-top:-5%;border-radius:5px;">-->
+<!--<p style="color:white;min-height: 20px;font-size:130%;"> Symptoms-->
+<!--<br> to expect </p>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row col-md-12" id="responsiveSymptoms" style="margin-top:5%;text-align: left;margin-left: 15%;font-size:120%;">-->
+<!--<ul style="list-style-position: inside;">-->
+<!--{{#each symptomsArray}}-->
+<!--<li>{{this}}</li>-->
+<!--{{/each}}-->
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row col-md-8" id="pregnancy" style="margin-left:8.7%;margin-top:3%;background-color:white;min-height:220px;border-radius:5px;width:56%;">-->
+<!--<div class="row col-md-offset-4 col-md-4" id="header" style="background-color:#e5b856;margin-top:-2%;border-radius:5px;min-height:60px;">-->
+<!--<p id="responsiveWeight" style="color:white;min-height: 20px;padding-top:10%;font-size:130%;"> My Weight</p>-->
+<!--</div>-->
+<!--<div class="col-md-offset-1 col-md-12" style="margin-top:3%;">-->
+<!--<div class="row col-md-4" id="pregnancy">-->
+<!--<p style="font-size:120%;"> Current-->
+<!--<br>Weight: </p>-->
+<!--<div class="row col-md-10 col-md-offset-1" style="border:solid 1px #e5b856;border-radius:5px;">-->
+<!--<p>-->
+<!--<span style="font-size:180%">-->
+<!--{{weight}}</span>kg-->
+<!--</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row col-md-4" id="pregnancy">-->
+<!--<p class="responsiveBMI" style="font-size:120%;padding-left:20%;"> Your-->
+<!--<br>BMI: </p>-->
+<!--<div class="row col-md-10 col-md-offset-2" id="pregnancy" style="border:solid 1px #e5b856;border-radius:5px;padding-left:6%;">-->
+<!--<p style="font-size:180%;">-->
+<!--{{bmi}}-->
+<!--</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row col-md-4" id="pregnancy" style="margin-left:1%;">-->
+<!--<p style="font-size:120%;"> Ideal-->
+<!--<br>Weight: </p>-->
+<!--<div class="row col-md-10 col-md-offset-1" id="pregnancy" style="border:solid 1px #e5b856;border-radius:5px;padding-left:10%;">-->
+<!--<p style="font-size:180%;">{{idealweight}}kg</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</template>-->
+
+<!--&lt;!&ndash; Baby Dashboard-->
+<!--==========================================&ndash;&gt;-->
+<!--<template name="babydash">-->
+<!--<div class="mummy-container" id="pregnancy" style="background-image: url(/img/babybackground.png);padding-bottom:2%;">-->
+<!--<div class="statusupdate" style="background-color:#f9f9f9">-->
+<!--<img src="/img/mybaby.png" style="max-height:120px;max-width:400px;height:auto;width:auto;">-->
+<!--</div>-->
+<!--<div class="container" id="pregnancy">-->
+<!--&lt;!&ndash; <div class="row"> &ndash;&gt;-->
+<!--<div class="mummysplit3" id="pregnancy" style="margin-top:2%;">-->
+<!--<div class="col-md-4" id="pregnancy" style="min-height:516px;height:auto;background-color:white;border-radius:5px;">-->
+<!--&lt;!&ndash; <img src="img/tooltip.png" style="color: white;float: left;top: 0;right: 0;position: absolute;margin-right: 2%;margin-top: 2%;max-height:20px;"> &ndash;&gt;-->
+<!--<div class="row col-md-12" id="pregnancy" style="padding-top:2%;">-->
+
+<!--<div class="row col-md-offset-4 col-md-5" id="header" style="background-color:green;margin-top:-5%;border-radius:5px;min-height:60px;padding-top:5%;">-->
+<!--<p style="color:white;min-height: 20px;font-size:120%;"> Baby Size </p>-->
+<!--</div>-->
+<!--<div class="row col-md-12" style="margin-left:5%;">-->
+<!--<p style="font-size:120%">-->
+<!--<br> {{photodesc}}-->
+<!--<br>-->
+<!--</p>-->
+<!--</div>-->
+<!--<div class="row col-md-12" style="margin-left:5%;">-->
+<!--<img src="/cfs/files/images/{{photourl}}" style="padding-top:5%; max-width:250px; max-height:700px;">-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row col-md-8" id="pregnancy" style="min-height:480px;height:auto;">-->
+<!--<div class="row col-md-12" id="pregnancy" style="background-color:white;margin-left:9%;border-radius:5px;">-->
+<!--<div class="row col-md-offset-4 col-md-5" id="header" style="background-color:#6ba1eb;margin-top:-1%;border-radius:5px;min-height:60px;padding-top:2%;">-->
+<!--<p style="color:white;min-height: 20px;font-size:130%;"> Baby Name </p>-->
+<!--</div>-->
+<!--&lt;!&ndash; <img src="img/tooltip.png" style="color: white;float: left;top: 0;right: 0;position: absolute;margin-right: 1%;margin-top: 1%;max-height:20px;"> &ndash;&gt;-->
+<!--<div class="row col-md-12" id="pregnancy" style="min-height:200px;background-color:white;border-radius:5px;">-->
+<!--<div class="row col-md-4" id="pregnancy">-->
+<!--{{#if isGenderNull}}-->
+<!--<button type="button" class="btn btn-primary" style="background-color:#2e6da4;">Boy</button>-->
+<!--<button type="button" class="btn btn-danger">Girl</button>-->
+<!--{{/if}} {{#if isBoy}}-->
+<!--&lt;!&ndash; <img src="img/babygender.png"> &ndash;&gt;-->
+<!--<i class="fa fa-mars fa-5x" style="font-size:1200%;color:#6ecff3;margin-top:5%;"></i> {{else}} {{#if isGirl}}-->
+<!--&lt;!&ndash; <img src="img/footprint.png"> &ndash;&gt;-->
+<!--<i class="fa fa-venus fa-5x" style="font-size:1200%;color:#d9534f;margin-top:5%;"></i> {{else}} {{/if}} {{/if}}-->
+<!--</div>-->
+<!--<div class="row col-md-8" id="pregnancy" style="margin-left: 6%;margin-top: 5%;">-->
+<!--{{#if isBoy}}-->
+<!--<h2 class="editable-text-trigger" style="color:#6ecff3;">-->
+<!--<br> {{> editableText context=example collection="posts" field="name" placeholder="Input baby name"}}-->
+<!--<br>-->
+<!--</h2>-->
+<!--{{else}} {{#if isGirl}}-->
+<!--<h2 class="editable-text-trigger" style="color:#d9534f;">-->
+<!--<br> {{> editableText context=example collection="posts" field="name" placeholder="Input baby name"}}-->
+<!--<br>-->
+<!--</h2>-->
+<!--{{else}}-->
+<!--<h2 class="editable-text-trigger">-->
+<!--<br> {{> editableText context=example collection="posts" field="name" placeholder="Input baby name"}}-->
+<!--<br>-->
+<!--</h2>-->
+<!--{{/if}}{{/if}}-->
+<!--&lt;!&ndash; <p style="font-size:250%;color:#6ecff3">Oliver Tan Ah Hock</p> &ndash;&gt;-->
+<!--<div class="row col-md-12" id="pregnancy" style="padding-top:5%;margin-left:15%;font-size:120%;">-->
+<!--<div class="row col-md-6" id="pregnancy">-->
+<!--<span class="belowoliver">-->
+<!--<b>-->
+<!--Age:-->
+<!--</b>-->
+<!--<br> {{currentWeek}}w old-->
+<!--</span>-->
+<!--</div>-->
+<!--<div class="row col-md-6" id="pregnancy">-->
+<!--<span class="belowoliver">-->
+<!--{{#if satisfyWeekCondition}} <b>Weight:</b>-->
+<!--<br> {{weight}}-->
+<!--<br> {{else}} {{/if}}-->
+<!--</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="row col-md-12" id="responsiveWhatHap" style="min-height:212px;background-color:white;margin-top:7%;margin-left:9%;border-radius:5px;">-->
+<!--<div class="row col-md-12" id="pregnancy" style="padding-top:5%">-->
+<!--<div class="row col-md-offset-4 col-md-5" id="header" style="background-color:#9a68eb;margin-top:-7%;border-radius:5px;min-height:60px;">-->
+<!--<p style="color:white;min-height: 20px;font-size:130%;"> What's happening to your-->
+<!--<br>baby </p>-->
+<!--</div>-->
+<!--<div class="row col-md-12" style="margin-top:4%;margin-left:3%;font-size:120%;">{{whathapbaby}}</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="mummysplit3" id="pregnancy">-->
+<!--<div class="row col-md-6" style="margin-top:2%;" id="pregnancy">-->
+<!--&lt;!&ndash; <img src="img/tooltip.png" style="color: white;float: left;top: 0;right: 0;position: absolute;margin-right: 1%;margin-top: 1%;max-height:20px;"> &ndash;&gt;-->
+<!--<div class="innerdiv" style="background-color:white;margin-top:4%;border-radius:5px;">-->
+<!--<div class="col-md-offset-3 col-md-6" style="background-color:#f37d8a;margin-top:-2%;border-radius:5px;">-->
+<!--<p style="color:white;min-height: 20px;font-size:160%;"> Kick Counter </p>-->
+<!--</div>-->
+<!--<div class="col-md-12" style="padding-top:3%;padding-bottom:3%;height:200px;position:relative;">-->
+<!--<input type="button" class="btn btn-default btn-circleKick" style="color:white;float:left;bottom: 0;left:0;position: absolute;margin-left:2%;margin-bottom:2%;" value="Start" />-->
+<!--<p class="showTimerKicks2">-->
+<!--<br>Duration: {{clock}}-->
+<!--<br> No.of Kicks: {{kicks}}-->
+<!--</p>-->
+<!--<input type="button" class="btn btn-default btn-circleKickStop" style="color:white;float:left;bottom: 0;left:0;position: absolute;margin-left:2%;margin-bottom:2%;" value="Stop" />-->
+<!--<input type="image" class="kick2" src="/img/kickstart.png">-->
+<!--</div>-->
+<!--<table class="tracker">-->
+<!--<tr style="background-color:#f37d8a;color:white;height:50px;">-->
+<!--<td>Date</td>-->
+<!--<td>Start Time</td>-->
+<!--<td>Duration</td>-->
+<!--<td>Kick Count</td>-->
+<!--</tr>-->
+<!--{{#each testEfficientKick}}-->
+<!--<tr>-->
+<!--<td class="kickright">{{formatDate startDate}}</td>-->
+<!--<td class="kickright">{{startTime}}</td>-->
+<!--<td class="kickright">{{totalDuration}}</td>-->
+<!--<td>{{noOfKicks}}-->
+<!--<input type="image" class="kickLatestTrash" img src="/img/trash.png">-->
+<!--</td>-->
+<!--</tr>-->
+<!--{{/each}}-->
+<!--</table>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="col-md-6" style="margin-top:2%;" id="pregnancy">-->
+<!--&lt;!&ndash; <img src="img/tooltip.png" style="color: white;float: left;top: 0;right: 0;position: absolute;margin-right: 1%;margin-top: 1%;max-height:20px;"> &ndash;&gt;-->
+<!--<div class="innerdiv" id="pregnancy" style="margin-left:15%;background-color:white;margin-top:4%;border-radius:5px;width:100%;">-->
+<!--<div class="col-md-offset-3 col-md-6" style="background-color:#e5b856;margin-top:-2%;border-radius:5px;">-->
+<!--<p style="color:white;min-height: 20px;font-size:160%;"> Contraction Timer </p>-->
+<!--</div>-->
+<!--<div class="col-md-12" style="padding-top:3%;padding-bottom:3%;padding-right:10%;height:200px;">-->
+<!--<div class="time"></div>-->
+<!--<input type="button" class="btn btn-default btn-circleContraction" style="color:white;margin-left:10%;margin-top:7%;" value="Start" />-->
+<!--<p class="showTimerKicks" style="text-align:center;padding-left:10%;">-->
+<!--<br>Duration: {{clock}}-->
+<!--<br>-->
+<!--</p>-->
+<!--<input type="button" class="btn btn-default btn-circleContractionStop" style="color:white;margin-left:10%;" value="Stop" />-->
+<!--</div>-->
+<!--<table class="tracker">-->
+<!--<tr style="background-color:#e5b856;color:white;height:50px;">-->
+<!--<td>Date</td>-->
+<!--<td>Start Time</td>-->
+<!--<td>End Time</td>-->
+<!--<td>Duration</td>-->
+<!--<td>Time between Contractions</td>-->
+<!--</tr>-->
+<!--{{#each testEfficientContraction}}-->
+<!--<tr>-->
+<!--<td class="contractionright">{{formatDate startDate}}</td>-->
+<!--<td class="contractionright">{{#if startTime}} {{startTime}} {{else}} 00:00:00 {{/if}}</td>-->
+<!--<td class="contractionright">{{endTime}}</td>-->
+<!--<td class="contractionright">{{totalDuration}}</td>-->
+<!--<td>{{frequency}}-->
+<!--<input type="image" class="contractionTrash" img src="/img/trash.png">-->
+<!--</td>-->
+<!--</tr>-->
+<!--{{/each}}-->
+<!--</table>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</template>-->

@@ -1,0 +1,51 @@
+# Meteor packages used by this project, one per line.
+# Check this file (and the other files in this directory) into your repository.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you,
+# but you can also edit it by hand.
+
+meteor-platform
+autopublish
+insecure
+accounts-base
+accounts-password
+accounts-facebook
+service-configuration
+iron:router
+dburles:collection-helpers
+aldeed:collection2
+alanning:roles
+twbs:bootstrap
+fortawesome:fontawesome
+aldeed:autoform
+email
+yogiben:admin
+cfs:standard-packages
+cfs:gridfs
+yogiben:autoform-file
+aldeed:clock
+ian:accounts-ui-bootstrap-3
+reactive-var
+cfs:ejson-file
+shcherbin:slickjs
+numeral:numeral
+babrahams:editable-text
+babrahams:editable-text-wysiwyg
+meteorhacks:fast-render
+babrahams:transactions
+lookback:dropdowns
+momentjs:moment
+rubaxa:sortable
+aslagle:reactive-table
+lookback:tooltips
+mizzao:bootboxjs
+tsega:bootstrap3-datetimepicker
+useraccounts:bootstrap@1.11.1
+useraccounts:core@1.11.1
+natestrauser:select2
+http
+mdg:camera
+dburles:google-maps
+mswartz:embedly
+mizzao:tutorials
+nvd3:nvd3

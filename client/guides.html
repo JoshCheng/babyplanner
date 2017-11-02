@@ -1,0 +1,68 @@
+<template name="guides">
+  <div class="container" style="margin-top:5%;">
+    <div class="col-md-3" data-intro={{findTool "EXERCISE"}} data-step="1" data-position="right">
+      <div class="portlet box blue-madison" >
+        <div class="portlet-title">
+          <div class="caption">
+            <i class="fa fa-list-alt"></i>
+            <span class="caption-subject bold uppercase">Guide Categories</span>
+          </div>
+        </div>
+        <!-- <div class="portlet-body vertical-center">
+          <div class="col-md-10 col-md-offset-1" style="text-align:center">
+            <div class="panel-body">
+              {{#each addIndex categories}}
+              <div id="categories" style="font-size:30px"> <a href="#" data-test="{{value}}"> {{value}} </a> </div>
+              {{/each}}
+            </div>
+          </div>
+        </div> -->
+        <div class="portlet-body vertical-center">
+          <div class="col-md-10 col-md-offset-1 col-sm-12 col-xs-12 col-lg-10 col-lg-offset-1">
+            {{#each addIndex categories}}
+            <h4 style="margin-left:-10px">
+              <a data-toggle="collapse" data-parent="#accordion" href="#{{index}}" class="maincat" id="maincat{{index}}" data-test="{{value}}">
+                <i class="fa fa-caret-right fa-lg"></i> {{value}} </a>
+            </h4>
+            <div id="{{index}}" class="panel-collapse collapse">
+              <div>
+                {{#each titles value}}
+                <div id="sCategories" data-test="{{value}}" style="margin-bottom:10px;" data-target="div{{index}}">{{value}}</div>
+                {{/each}}
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <div class="portlet box blue-madison">
+        <div class="portlet-title">
+          <div class="caption">
+            <i class="fa fa-question-circle fa-5x red-tooltip" data-toggle="tooltip" data-placement="left" title="{{findTool "EXERCISE"}}"  style="position:absolute;top:2px;right:0px;font-size:115%;"></i>
+            <i class="fa fa-book"></i>
+            <span class="caption-subject bold uppercase">{{currentCategory}}</span>
+          </div>
+        </div>
+        <div class="portlet-body vertical-center" >
+          <div class="col-md-12" id="defaultGuides" style="margin-top:5%;display:none;overflow-y:auto;max-height:600px">
+            {{#each defaultGuides}}
+            <div class="col-md-12" id="{{this.title}}" name="{{this.title}}" style="border: solid black 1px;margin-bottom:5%;">
+              <a class="embedly-card" href="{{this.url}}">{{this.title}}</a>
+            </div>
+            {{/each}}
+          </div>
+          <div class="col-md-12" id="selectedGuides" style="margin-top:5%;display:none;overflow-y:auto;max-height:600px">
+            {{#each addIndex guides}}
+            <div class="col-md-12" id="div{{index}}" name ="{{this.title}}" style="border: solid black 1px;margin-bottom:5%;">
+              <a class="embedly-card" href="{{value.url}}">{{value}}</a>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
